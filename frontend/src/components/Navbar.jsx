@@ -78,6 +78,7 @@ export function Navbar() {
 						<li className="text-center text-xl max-sm:mb-6">
 							<NavLink
 								to={'/'}
+								onClick={handlerCloseMenu}
 								className={({ isActive }) =>
 									isActive
 										? "sm:relative sm:text-orange-500 sm:before:content-[''] sm:before:absolute sm:before:bottom-0 sm:before:left-0 sm:before:w-6/12 sm:before:h-[2px] sm:before:bg-black"
@@ -90,6 +91,7 @@ export function Navbar() {
 						<li className="text-center text-xl max-sm:mb-6">
 							<NavLink
 								to={'/events'}
+								onClick={handlerCloseMenu}
 								className={({ isActive }) =>
 									isActive
 										? "sm:relative sm:text-orange-500 sm:before:content-[''] sm:before:absolute sm:before:bottom-0 sm:before:left-0 sm:before:w-6/12 sm:before:h-[2px] sm:before:bg-black"
@@ -103,7 +105,8 @@ export function Navbar() {
 						<div className="max-sm:p-4 max-sm:absolute max-sm:w-full max-sm:bottom-0">
 							<Link
 								to={'/events/create'}
-								className="btn"
+								className="relative flex p-4 gap-2 w-full bg-white sm:bg-orange-500 sm:text-white justify-center py-2 btn"
+								onClick={handlerCloseMenu}
 							>
 								<Plus size={24} />
 								Criar Evento
