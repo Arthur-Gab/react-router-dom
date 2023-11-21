@@ -163,7 +163,7 @@ export function EventForm({ method, title, nav_label }) {
 
 	return (
 		<>
-			<header className="container p-4">
+			<header className="container p-4 max-w-4xl">
 				<nav>
 					{method == 'POST' && (
 						<Link
@@ -185,7 +185,7 @@ export function EventForm({ method, title, nav_label }) {
 					)}
 				</nav>
 			</header>
-			<main className="container p-4 mt-8">
+			<main className="container p-4 mt-8 max-w-4xl">
 				<h1 className="text-2xl text-center">{title}</h1>
 
 				{form}
