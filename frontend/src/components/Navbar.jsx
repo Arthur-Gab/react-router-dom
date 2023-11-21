@@ -8,6 +8,8 @@ export function Navbar() {
 	const closerBtn = useRef(null);
 	const openBtn = useRef(null);
 
+	console.log(isOpen);
+
 	function handlerOpenMenu() {
 		setIsOpen(true);
 
@@ -56,12 +58,14 @@ export function Navbar() {
 
 					{/* Menu */}
 					<ul
-						className={`flex sm:items-center sm:gap-6 sm:p-2 max-sm:flex-col max-sm:absolute max-sm:top-0 max-sm:right-0 max-sm:w-10/12 max-sm:h-full max-sm:z-30 max-sm:bg-orange-500 ${
-							isOpen ? 'max-sm:translate-x-0' : 'max-sm:translate-x-full'
+						className={`flex sm:items-center sm:gap-6 sm:p-2 max-sm:flex-col max-sm:absolute max-sm:top-0 max-sm:right-0 max-sm:h-full max-sm:z-30 max-sm:bg-orange-500 transition-all ${
+							isOpen ? 'max-sm:w-10/12' : 'max-sm:w-0'
 						}`}
 					>
 						<button
-							className="p-2 w-fit self-end sm:hidden"
+							className={`p-2 w-fit self-end sm:hidden transition-opacity  opacity-1 ${
+								!isOpen && 'max-sm:w-0 opacity-5'
+							}`}
 							onClick={handlerCloseMenu}
 							ref={closerBtn}
 						>

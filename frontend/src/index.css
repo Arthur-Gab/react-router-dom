@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 @layer base {
-	#root {
+	/* #root {
 		@apply overflow-x-hidden relative h-screen;
-	}
+	} */
 
 	.btn {
 		@apply relative flex p-4 gap-2 w-full bg-white sm:bg-orange-500 sm:text-white justify-center py-2 before:absolute before:-bottom-2 before:-right-2 before:bg-transparent before:border-[3px] before:border-black before:-z-10 before:content-[''] before:w-full before:h-full;
