@@ -1,5 +1,9 @@
 import { prisma } from '../lib/prisma';
 import { Request, Response } from 'express';
+import {
+	isAnyFieldMissing,
+	isEveryFieldMissing,
+} from './util/isAnyFieldMissing';
 
 // 🚧 Work on progress 🚧
 
@@ -12,16 +16,9 @@ export async function index(_: Request, res: Response) {
 
 // Create a Event on db
 export async function store(req: Request, res: Response) {
-	const { title, description, image, date } = req.body;
+	const fieldMissing = isAnyFieldMissing(req.body);
 
-	console.log(title);
-	console.log(description);
-	console.log(image);
-	console.log(date);
-
-	const isAnyFieldMissing = !title || !description || !image || !date;
-
-	if (isAnyFieldMissing) {
+	if (fieldMissing) {
 		return res.status(400).json({
 			error: 'Um ou mais campos estão faltando.',
 		});
@@ -29,12 +26,39 @@ export async function store(req: Request, res: Response) {
 
 	const event = await prisma.event.create({
 		data: {
-			title,
-			description,
-			image,
-			date,
+			...req.body,
 		},
 	});
 
 	return res.status(201).json(event);
+}
+
+/*
+    Alterar campos informados pelo cliente
+    - Caso nenhum campo seja enviado enviar 400
+*/
+export async function update(req: Request, res: Response) {
+	const { id, ...otherFields } = req.body;
+
+	const fieldMissing = isEveryFieldMissing(req.body);
+
+	if (fieldMissing) {
+		return res.status(400).json({
+			error: 'Nenhum campo para alteração informado',
+		});
+	}
+
+	// Procurar o evento pelo id e substituir os dados
+	await prisma.event.update({
+		where: {
+			id,
+		},
+		data: {
+			...otherFields,
+		},
+	});
+
+	return res.status(200).json({
+		message: 'Alteração realizada com sucesso',
+	});
 }
