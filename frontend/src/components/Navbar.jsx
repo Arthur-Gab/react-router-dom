@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 import { Route as Logo, Menu, X, Plus } from 'lucide-react';
 import { useState, useRef } from 'react';
 
@@ -113,6 +113,7 @@ export function Navbar() {
 					</ul>
 				</nav>
 			</header>
+			<Outlet />
 		</>
 	);
 }
