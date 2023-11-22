@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { MoveLeft as Back, X } from 'lucide-react';
 import { Input } from '../UI/Input';
 import { TextArea } from '../UI/TextArea';
@@ -166,22 +165,28 @@ export function EventForm({ method, title, nav_label }) {
 			<header className="container p-4 max-w-4xl">
 				<nav>
 					{method == 'POST' && (
-						<Link
-							to={'/'}
+						<button
 							className="relative flex p-4 gap-2 w-44 bg-orange-500 text-white justify-center py-2 btn"
+							onClick={(e) => {
+								e.preventDefault();
+								history.back(-1);
+							}}
 						>
 							<Back size={26} />
 							{nav_label}
-						</Link>
+						</button>
 					)}
 					{method == 'PATCH' && (
-						<Link
-							to={'/events'}
+						<button
 							className="relative flex p-4 gap-2 w-44 bg-orange-500 text-white justify-center py-2 btn"
+							onClick={(e) => {
+								e.preventDefault();
+								history.back(-1);
+							}}
 						>
 							<X size={26} />
 							{nav_label}
-						</Link>
+						</button>
 					)}
 				</nav>
 			</header>

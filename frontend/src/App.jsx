@@ -1,5 +1,5 @@
 import { RoutesApp } from './routes/Routes';
 
 export default function App() {
-	return <RoutesApp />;
+	return <RoutesApp back_url={'/events'} />;
 }

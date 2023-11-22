@@ -8,8 +8,6 @@ export function Navbar() {
 	const closerBtn = useRef(null);
 	const openBtn = useRef(null);
 
-	console.log(isOpen);
-
 	function handlerOpenMenu() {
 		setIsOpen(true);
 
