@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import {
 	isAnyFieldMissing,
 	isEveryFieldMissing,
-} from './util/isAnyFieldMissing';
+} from './util/fieldsValidation';
 
 // 🚧 Work on progress 🚧
 
