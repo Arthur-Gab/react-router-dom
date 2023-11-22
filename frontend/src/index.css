@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 @layer base {
-	/* #root {
+	#root {
 		@apply overflow-x-hidden relative h-screen;
-	} */
+	}
 
 	.btn {
-		@apply before:absolute before:-bottom-2 before:-right-2 before:bg-transparent before:border-[3px] before:border-black before:-z-10 before:content-[''] before:w-full before:h-full;
+		@apply relative before:absolute before:-bottom-2 before:-right-2 before:bg-transparent before:border-[3px] before:border-black before:-z-10 before:content-[''] before:w-full before:h-full;
 	}
 
 	a,

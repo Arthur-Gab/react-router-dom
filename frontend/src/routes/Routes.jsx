@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Home } from '../pages/Home';
 import { EventForm } from '../components/EventForm';
+import { Events } from '../pages/Events';
 
 export function RoutesApp() {
 	return (
@@ -9,6 +10,10 @@ export function RoutesApp() {
 				<Route
 					path="/"
 					element={<Home />}
+				/>
+				<Route
+					path="/events"
+					element={<Events />}
 				/>
 				<Route
 					path="/events/create"
@@ -21,7 +26,7 @@ export function RoutesApp() {
 					}
 				/>
 				<Route
-					path="/events/edit"
+					path="/events/edit/:id"
 					element={
 						<EventForm
 							method="PATCH"
