@@ -1,7 +1,7 @@
 export function Home() {
-	return (
-		<>
-			<main className="container p-4 mt-4">Some content...</main>
-		</>
-	);
+  return (
+    <>
+      <main className="container mt-4 p-4">Some content...</main>
+    </>
+  );
 }

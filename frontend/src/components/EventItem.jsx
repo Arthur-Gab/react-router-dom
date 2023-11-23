@@ -1,26 +1,26 @@
 import { Link } from 'react-router-dom';
 
-export function EventItem() {
+export function EventItem({ id, title, description, image, date }) {
 	return (
-		<article className="p-6 rounded-md bg-neutral-100 shadow shadow-black/20  max-w-3xl mx-auto">
-			<div className="flex max-md:flex-col md:flex md:gap-6">
-				<figure className="self-center w-full">
+		<article className='h-fit w-full max-w-3xl self-center rounded-md bg-neutral-100  p-6 shadow shadow-black/20'>
+			<div className='flex max-md:flex-col md:flex md:gap-6'>
+				<figure className='relative w-full max-w-[350px] self-center'>
+					<span className='absolute left-2/4 top-2/4 z-10 -translate-x-1/2 -translate-y-1/2 rounded bg-white/75 px-4 py-1 text-2xl'>
+						{date}
+					</span>
 					<img
-						src="https://picsum.photos/500/400"
-						alt="Random Image"
-						className="rounded shadow w-full h-full min-w-[320px]"
+						src={image}
+						alt={title}
+						className='h-full w-full rounded shadow brightness-75'
 					/>
 				</figure>
-				<div className="relative z-0 flex flex-col">
-					<h2 className="mt-6 text-2xl text-center mb-2">Title</h2>
-					<p>
-						Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-						Lorem Ipsum has been the industry.
-					</p>
+				<div className='relative z-0 flex flex-col'>
+					<h2 className='mb-2 mt-6 text-center text-2xl font-bold'>{title}</h2>
+					<p>{description}</p>
 
 					<Link
-						to={'/events/edit/1'}
-						className="bg-orange-500 btn w-full mt-8 text-center p-2"
+						to={`/events/edit/${id}`}
+						className='btn mt-8 w-full bg-orange-500 p-2 text-center'
 					>
 						Editar
 					</Link>
