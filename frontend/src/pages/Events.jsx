@@ -5,14 +5,14 @@ import { Plus } from 'lucide-react';
 
 export function Events() {
 	const response = useLoaderData();
-	const status = response.status;
+	const status = response?.status;
 
 	let responseErrorElement = null;
-	if (status != 200) {
+	if (status != 200 || !response) {
 		responseErrorElement = (
 			<section className='flex flex-1 flex-col items-center justify-center'>
 				<h1 className='mb-8 text-4xl font-bold'>👀 Oops!</h1>
-				<p>{response.data?.error} 🤔</p>
+				<p>{response ? response.data.error : 'Something went wrong!'} 🤔</p>
 				<p className='mb-6'>Esperimente criar um evento logo a baixo</p>
 
 				<Link
@@ -49,11 +49,23 @@ export function Events() {
 	);
 }
 
-export async function loader() {
-	try {
-		const response = await API.get('/events');
-		return response;
-	} catch (error) {
-		return error.response;
-	}
+export function loader(queryClient) {
+	return async () => {
+		try {
+			let data = queryClient.getQueryData({
+				queryKey: ['get_event'],
+			});
+
+			if (!data) {
+				data = await queryClient.fetchQuery({
+					queryKey: ['get_event'],
+					queryFn: async () => await API.get('/events'),
+				});
+			}
+
+			return data;
+		} catch (error) {
+			return error.response;
+		}
+	};
 }

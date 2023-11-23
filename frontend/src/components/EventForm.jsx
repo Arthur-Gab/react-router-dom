@@ -2,6 +2,7 @@ import { MoveLeft as Back, X } from 'lucide-react';
 import { Input } from '../UI/Input';
 import { TextArea } from '../UI/TextArea';
 import { useForm } from 'react-hook-form';
+import { API } from '../services/api';
 
 export function EventForm({ method, title, nav_label }) {
 	// Put data value to new Date()
@@ -14,11 +15,9 @@ export function EventForm({ method, title, nav_label }) {
 			title: '',
 			date: getFormatedDate(),
 			description: '',
-			image: 'https://picsum.photos/200',
+			image: 'https://picsum.photos/500/400',
 		},
 	});
-
-	console.log(errors);
 
 	function getFormatedDate() {
 		const dataAtual = new Date();
@@ -30,9 +29,14 @@ export function EventForm({ method, title, nav_label }) {
 		return `${ano}-${mes}-${dia}`;
 	}
 
-	function onCreateEvent(data) {
+	async function onCreateEvent(data) {
 		// Enviar para o back os dados
-		console.log(data);
+		try {
+			const event = await API.post('/events/create', data);
+			console.log(event.data);
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
 	function onEditEvent(data) {
