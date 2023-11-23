@@ -5,9 +5,12 @@ import { useForm } from 'react-hook-form';
 import { API } from '../services/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export function EventForm({ method, title, nav_label }) {
 	const queryClient = useQueryClient();
+	const location = useLocation();
+
 	const {
 		register,
 		handleSubmit,
@@ -46,9 +49,10 @@ export function EventForm({ method, title, nav_label }) {
 		}
 	}
 
-	function onEditEvent(data) {
+	async function onEditEvent(data) {
 		// Enviar para o back somente os dados completos
 		// Validar se todos os itens estão vazios
+		console.log(location.pathname);
 		console.log(data);
 	}
 
