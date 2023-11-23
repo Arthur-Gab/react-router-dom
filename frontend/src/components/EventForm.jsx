@@ -3,21 +3,28 @@ import { Input } from '../UI/Input';
 import { TextArea } from '../UI/TextArea';
 import { useForm } from 'react-hook-form';
 import { API } from '../services/api';
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
 export function EventForm({ method, title, nav_label }) {
-	// Put data value to new Date()
+	const queryClient = useQueryClient();
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		reset,
+		formState: { errors, isSubmitSuccessful },
 	} = useForm({
 		defaultValues: {
 			title: '',
 			date: getFormatedDate(),
 			description: '',
-			image: 'https://picsum.photos/500/400',
+			image: 'https://picsum.photos/350/280',
 		},
 	});
+
+	useEffect(() => {
+		reset();
+	}, [isSubmitSuccessful]);
 
 	function getFormatedDate() {
 		const dataAtual = new Date();
@@ -32,8 +39,8 @@ export function EventForm({ method, title, nav_label }) {
 	async function onCreateEvent(data) {
 		// Enviar para o back os dados
 		try {
-			const event = await API.post('/events/create', data);
-			console.log(event.data);
+			await API.post('/events/create', data);
+			queryClient.invalidateQueries({ queryKey: ['get_event'] });
 		} catch (error) {
 			console.error(error);
 		}

@@ -42,7 +42,7 @@ export function Events() {
 
 	return (
 		<>
-			<main className='container mt-4 flex flex-1 flex-col p-4'>
+			<main className='container mt-16 flex flex-1 flex-col p-4'>
 				{status == 200 ? fetchedEvents : responseErrorElement}
 			</main>
 		</>
