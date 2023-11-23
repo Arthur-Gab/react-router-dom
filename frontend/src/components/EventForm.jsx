@@ -52,8 +52,12 @@ export function EventForm({ method, title, nav_label }) {
 	async function onEditEvent(data) {
 		// Enviar para o back somente os dados completos
 		// Validar se todos os itens estão vazios
-		console.log(location.pathname);
-		console.log(data);
+		try {
+			await API.patch(`${location.pathname}`, data);
+			queryClient.invalidateQueries({ queryKey: ['get_event'] });
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
 	let form = null;
