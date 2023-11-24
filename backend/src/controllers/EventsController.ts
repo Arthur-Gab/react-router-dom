@@ -1,6 +1,7 @@
 import { prisma } from '../lib/prisma';
 import { Request, Response } from 'express';
 import {
+	getFieldsWithValue,
 	isAnyFieldMissingValidation,
 	isEveryFieldMissingValidation,
 } from './util/fieldsValidation';
@@ -69,14 +70,17 @@ export async function update(req: Request, res: Response) {
 		});
 	}
 
-	const { id, ...eventFields } = req.body;
-	// Procurar o evento pelo id e substituir os dados
+	const { id } = req.params;
+	const fieldsWithValue = getFieldsWithValue(req.body);
+	console.log(fieldsWithValue);
+
+	//Procurar o evento pelo id e substituir os dados
 	await prisma.event.update({
 		where: {
 			id,
 		},
 		data: {
-			...eventFields,
+			...fieldsWithValue,
 		},
 	});
 
