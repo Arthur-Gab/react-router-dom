@@ -1,7 +1,7 @@
 import { redirect, useLoaderData, useNavigate } from 'react-router-dom';
 import { Form } from '../components/Form';
-import { X } from 'lucide-react';
-import { getEvent, editEvent } from '../util/event';
+import { MoveLeft } from 'lucide-react';
+import { getEvent, editEvent, parseToEventObject } from '../util/event';
 
 export function loader(queryClient) {
 	return async ({ params }) => {
@@ -45,12 +45,7 @@ export function action(queryClient) {
 		const formData = await request.formData();
 		const { id } = params;
 
-		const response = await editEvent(id, {
-			title: formData.get('title'),
-			description: formData.get('description'),
-			date: formData.get('date'),
-			image: formData.get('image'),
-		});
+		const response = await editEvent(id, parseToEventObject(formData));
 
 		if (response) {
 			await queryClient.refetchQueries(['events', id]);
@@ -75,7 +70,7 @@ export function EditEvent() {
 							navigate('/events');
 						}}
 					>
-						<X size={26} />
+						<MoveLeft size={26} />
 						Voltar
 					</button>
 				</nav>

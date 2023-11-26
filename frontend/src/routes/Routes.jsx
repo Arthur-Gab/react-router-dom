@@ -9,6 +9,7 @@ import {
 	loader as updateEventLoader,
 	action as updateEventAction,
 } from '../pages/EditEvent';
+import { CreateEvent, action as createEventAction } from '../pages/CreateEvent';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -39,6 +40,11 @@ const routes = createBrowserRouter([
 		element: <EditEvent />,
 		loader: updateEventLoader(queryClient),
 		action: updateEventAction(queryClient),
+	},
+	{
+		path: '/events/create',
+		element: <CreateEvent />,
+		action: createEventAction(queryClient),
 	},
 ]);
 

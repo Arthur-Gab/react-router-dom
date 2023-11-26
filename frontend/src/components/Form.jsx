@@ -6,7 +6,7 @@ import { useNavigation, useSubmit } from 'react-router-dom';
 export function Form({ method, event }) {
 	const submit = useSubmit();
 	const { state } = useNavigation();
-	const { title, description, date, image } = event;
+	const { title, description, date, image } = event || {};
 
 	const {
 		register,

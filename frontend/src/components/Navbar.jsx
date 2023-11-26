@@ -64,7 +64,7 @@ export function Navbar() {
 
 					{/* Menu */}
 					<ul
-						className={`flex transition-all max-sm:absolute max-sm:right-0 max-sm:top-0 max-sm:z-30 max-sm:h-full max-sm:flex-col max-sm:bg-orange-500 sm:items-center sm:gap-6 sm:p-2 ${
+						className={`flex transition-all max-sm:absolute max-sm:right-0 max-sm:top-0 max-sm:z-30 max-sm:h-full max-sm:flex-col max-sm:bg-orange-500 sm:relative sm:z-0 sm:items-center sm:gap-6 sm:p-2 ${
 							isOpen ? 'max-sm:w-10/12' : 'max-sm:w-0'
 						}`}
 					>
