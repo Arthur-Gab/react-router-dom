@@ -1,7 +1,42 @@
 import { EventItem } from '../components/EventItem';
-import { API } from '../services/api';
 import { useLoaderData, Link } from 'react-router-dom';
 import { Plus } from 'lucide-react';
+import { getEvents } from '../util/event';
+
+export function loader(queryClient) {
+	return async () => {
+		try {
+			const events = queryClient.getQueryData(['events']);
+
+			if (events) {
+				return events;
+			}
+
+			const fetchedEvents = await queryClient.fetchQuery({
+				queryKey: ['events'],
+				queryFn: getEvents,
+			});
+
+			return fetchedEvents;
+		} catch (error) {
+			console.error('Error in loader:', error);
+
+			if (error.response) {
+				// The request was made and the server responded with a status code
+				// other than 2xx (e.g., 404, 500).
+				console.error('Server Error:', error.response.data);
+			} else if (error.request) {
+				// The request was made but no response was received.
+				console.error('No response received from the server.');
+			} else {
+				// Something happened in setting up the request that triggered an Error.
+				console.error('Error setting up the request:', error.message);
+			}
+
+			return null;
+		}
+	};
+}
 
 export function Events() {
 	const response = useLoaderData();
@@ -12,7 +47,12 @@ export function Events() {
 		responseErrorElement = (
 			<section className='flex flex-1 flex-col items-center justify-center'>
 				<h1 className='mb-8 text-4xl font-bold'>👀 Oops!</h1>
-				<p>{response ? response.data.error : 'Something went wrong!'} 🤔</p>
+				<p>
+					{response
+						? response.data.error
+						: 'Something went wrong! Take a look on console'}{' '}
+					🤔
+				</p>
 				<p className='mb-6'>Esperimente criar um evento logo a baixo</p>
 
 				<Link
@@ -42,30 +82,9 @@ export function Events() {
 
 	return (
 		<>
-			<main className='container mt-16 flex flex-1 flex-col p-4'>
+			<main className='container flex flex-1 flex-col p-4'>
 				{status == 200 ? fetchedEvents : responseErrorElement}
 			</main>
 		</>
 	);
-}
-
-export function loader(queryClient) {
-	return async () => {
-		try {
-			let data = queryClient.getQueryData({
-				queryKey: ['get_event'],
-			});
-
-			if (!data) {
-				data = await queryClient.fetchQuery({
-					queryKey: ['get_event'],
-					queryFn: async () => await API.get('/events'),
-				});
-			}
-
-			return data;
-		} catch (error) {
-			return error.response;
-		}
-	};
 }

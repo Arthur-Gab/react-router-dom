@@ -1,10 +1,14 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Home } from '../pages/Home';
-import { EventForm } from '../components/EventForm';
-import { Events, loader as eventLoader } from '../pages/Events';
 import { Navbar } from '../components/Navbar';
+import { Home } from '../pages/Home';
+import { Events, loader as eventLoader } from '../pages/Events';
+import {
+	EditEvent,
+	loader as updateEventLoader,
+	action as updateEventAction,
+} from '../pages/EditEvent';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -31,24 +35,10 @@ const routes = createBrowserRouter([
 		],
 	},
 	{
-		path: '/events/create',
-		element: (
-			<EventForm
-				method='POST'
-				title={'Criar Evento'}
-				nav_label={'Voltar'}
-			/>
-		),
-	},
-	{
 		path: '/events/edit/:id',
-		element: (
-			<EventForm
-				method='PATCH'
-				title={'Editar Evento'}
-				nav_label={'Cancelar'}
-			/>
-		),
+		element: <EditEvent />,
+		loader: updateEventLoader(queryClient),
+		action: updateEventAction(queryClient),
 	},
 ]);
 

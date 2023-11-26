@@ -6,7 +6,21 @@ import {
 	isEveryFieldMissingValidation,
 } from './util/fieldsValidation';
 
-// 🚧 Work on progress 🚧
+export async function show(req: Request, res: Response) {
+	const { id } = req.params;
+
+	const event = await prisma.event.findUnique({
+		where: { id },
+	});
+
+	if (!event) {
+		return res.status(404).json({
+			error: 'Esse evento não existe mais...',
+		});
+	}
+
+	return res.status(200).json(event);
+}
 
 /* 
 	Recuperar Eventos do BD
@@ -15,16 +29,16 @@ import {
 	400:
 		- Retornar erro quando não achar nenhum evento registrado no DB
 */
-export async function getAllEvents(_: Request, res: Response) {
-	const all_events = await prisma.event.findMany();
+export async function index(_: Request, res: Response) {
+	const events = await prisma.event.findMany();
 
-	if (all_events.length < 1) {
+	if (events.length < 1) {
 		return res.status(404).json({
 			error: 'Nenhum evento criado ainda...',
 		});
 	}
 
-	return res.status(200).json(all_events);
+	return res.status(200).json(events);
 }
 
 /* 
@@ -34,7 +48,7 @@ export async function getAllEvents(_: Request, res: Response) {
    400:
         - Retorna erro quando pelo menos um campo não contém valor.
 */
-export async function create(req: Request, res: Response) {
+export async function store(req: Request, res: Response) {
 	// Validar se pelo menos 1 campo não contem valor
 	const isAnyFieldMissing = isAnyFieldMissingValidation(req.body);
 
@@ -44,13 +58,15 @@ export async function create(req: Request, res: Response) {
 		});
 	}
 
-	const event = await prisma.event.create({
+	await prisma.event.create({
 		data: {
 			...req.body,
 		},
 	});
 
-	return res.status(201).json(event);
+	return res.status(201).json({
+		message: 'Evento criado com sucesso',
+	});
 }
 
 /* 
@@ -72,7 +88,6 @@ export async function update(req: Request, res: Response) {
 
 	const { id } = req.params;
 	const fieldsWithValue = getFieldsWithValue(req.body);
-	console.log(fieldsWithValue);
 
 	//Procurar o evento pelo id e substituir os dados
 	await prisma.event.update({

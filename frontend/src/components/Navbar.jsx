@@ -25,7 +25,7 @@ export function Navbar() {
 	return (
 		<>
 			<header
-				className={`w-screen border-b-2 border-b-orange-500 bg-white ${
+				className={`mb-8 w-screen border-b-2 border-b-orange-500 bg-white ${
 					isOpen && 'fixed left-0 top-0 z-20 h-screen'
 				}`}
 			>
