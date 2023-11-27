@@ -20,6 +20,7 @@ export function Home() {
 						<li className='flex'>
 							<Link
 								to='https://github.com/Arthur-Gab'
+								target='_blank'
 								className='h-fit w-fit rounded bg-orange-500 p-2 text-white'
 								aria-label='Visite meu perfil no Github'
 							>
@@ -32,7 +33,8 @@ export function Home() {
 						</li>
 						<li className='flex'>
 							<Link
-								to='https://github.com/Arthur-Gab'
+								to='https://www.linkedin.com/in/art2354/'
+								target='_blank'
 								className='h-fit w-fit rounded bg-orange-500 p-2 text-white'
 								aria-label='Visite meu perfil no Linkedin'
 							>
@@ -60,8 +62,8 @@ export function Home() {
 						</p>
 						<h3 className='mb-2 text-xl font-semibold'>No Backend</h3>
 						<p>
-							Levantei uma REST API com arquitetura MVC, utilizando Express,
-							TypeScript e Prisma para os Model.
+							Levantei uma REST API com arquitetura MVC, utilizando TypeScript e
+							Express para os Controllers, e Prisma para os Model.
 						</p>
 					</div>
 				</section>

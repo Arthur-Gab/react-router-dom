@@ -30,8 +30,8 @@ export function Navbar() {
 	return (
 		<>
 			<header
-				className={`mb-8 w-screen border-b-2 border-b-orange-500 bg-white ${
-					isOpen && 'fixed left-0 top-0 z-20 h-screen'
+				className={`fixed left-0 top-0 z-20 w-screen border-b-2 border-b-orange-500 bg-white ${
+					isOpen && 'h-[100dvh]'
 				}`}
 			>
 				<nav className={`container flex items-center justify-between p-2`}>
@@ -64,14 +64,14 @@ export function Navbar() {
 					{/* Backdrop */}
 					{isOpen && (
 						<div
-							className='absolute right-0 top-0 z-20 h-full w-full bg-black/20'
+							className='absolute right-0 top-0 z-20 h-[100dvh] w-full bg-black/20'
 							onClick={handlerCloseMenu}
 						></div>
 					)}
 
 					{/* Menu */}
 					<ul
-						className={`flex transition-all max-sm:absolute max-sm:right-0 max-sm:top-0 max-sm:z-30 max-sm:h-full max-sm:flex-col max-sm:bg-orange-500 sm:relative sm:z-0 sm:items-center sm:gap-6 sm:p-2 ${
+						className={`flex transition-all max-sm:absolute max-sm:right-0 max-sm:top-0 max-sm:z-30 max-sm:h-[100dvh] max-sm:flex-col max-sm:bg-orange-500 sm:sm:z-0 sm:items-center sm:gap-6 sm:p-2 ${
 							isOpen ? 'max-sm:w-10/12' : 'max-sm:hidden'
 						}`}
 					>

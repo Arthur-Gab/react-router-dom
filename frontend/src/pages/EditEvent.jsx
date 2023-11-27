@@ -139,7 +139,7 @@ function SkeletonUI() {
 						<div className='h-7 w-40 animate-pulse bg-neutral-200'></div>
 						<div className='h-9 w-full animate-pulse bg-neutral-200'></div>
 					</div>
-					<div className='mt-16 h-16 w-full animate-pulse bg-neutral-200'></div>
+					<div className='mt-8 h-16 w-full animate-pulse bg-neutral-200'></div>
 				</div>
 			</main>
 		</>

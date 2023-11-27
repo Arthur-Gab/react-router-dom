@@ -4,7 +4,11 @@
 
 @layer base {
 	#root {
-		@apply relative flex h-screen flex-col overflow-x-hidden;
+		@apply relative flex h-[100dvh] flex-col overflow-x-hidden;
+	}
+
+	main {
+		@apply mt-16;
 	}
 
 	.btn {
