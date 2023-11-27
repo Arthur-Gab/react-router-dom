@@ -12,7 +12,7 @@ export function Home() {
 						className='rounded-full border-2 border-black max-lg:w-96 max-md:w-80 max-sm:w-60'
 					/>
 				</figure>
-				<section className='mt-6 rounded-lg bg-gray-100 p-6 shadow-lg'>
+				<section className='mt-6 rounded-lg bg-neutral-100 p-6 shadow-lg shadow-black/20'>
 					<h1 className='mb-4 text-center text-3xl font-bold'>
 						👋 Olá, eu sou o Arthur Gabriel
 					</h1>
