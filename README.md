@@ -86,7 +86,8 @@ $ pnpm dev
 
 ### Monstrando Loading Skeleton Pages
 
-<img src='./docs/SkeletonUI.png' alt='SketletonUI'/>
+<img src='./docs/SkeletonUI.png' alt='SketletonUI from Events Page'/>
+<img src='./docs/SkeletonUI_editForm.png' alt='SketletonUI from Edit Event Page'/>
 
 <h2 id='techs'>🛠 Tecnologias</h2>
 
@@ -102,13 +103,17 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [Prisma](https://www.prisma.io/)
 
 <h3 id='author'>Autor</h3>
+<div style="display: flex; flex-direction: column; align-items: center; justify-center: center; gap: 8px">
 
-<a href="https://www.linkedin.com/in/art2354">
- <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/89430618?v=4" width="100px;" alt="My avatar"/>
- <br />
- <sub><b>Arthur Gabriel</b></sub></a>
+    <a href="https://www.linkedin.com/in/art2354">
+    <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/89430618?v=4" width="100px;" alt="My avatar"/>
+    <br />
+    <sub><b>Arthur Gabriel</b></sub></a>
 
-Feito com ❤️ por Arthur Gabriel 👋🏽 Entre em contato!
-[![Linkedin Badge](https://img.shields.io/badge/-Arthur-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/art2354/)](https://www.linkedin.com/in/art2354/)
-![Twitch Status](https://img.shields.io/twitch/status/a_gfer?logo=twitch&labelColor=%23fff&color=%239333ea)
-[![Gmail Badge](https://img.shields.io/badge/-arthurgabriel933@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:arthurgabriel933@gmail.com)](mailto:arthurgabriel933@gmail.com)
+    Feito com ❤️ por Arthur Gabriel 👋🏽 Entre em contato!
+    </br>
+    [![Linkedin Badge](https://img.shields.io/badge/-Arthur-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/art2354/)](https://www.linkedin.com/in/art2354/)
+    ![Twitch Status](https://img.shields.io/twitch/status/a_gfer?logo=twitch&labelColor=%23fff&color=%239333ea)
+    [![Gmail Badge](https://img.shields.io/badge/-arthurgabriel933@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:arthurgabriel933@gmail.com)](mailto:arthurgabriel933@gmail.com)
+
+<div>
