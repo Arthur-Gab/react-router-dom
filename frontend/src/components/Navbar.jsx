@@ -39,7 +39,10 @@ export function Navbar() {
 						isOpen && ''
 					}`}
 				>
-					<Link to={'/'}>
+					<Link
+						to={'/'}
+						aria-label='Ir para página Inicial'
+					>
 						<Logo
 							size={32}
 							className='text-orange-500'

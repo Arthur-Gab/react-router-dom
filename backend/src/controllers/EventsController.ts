@@ -38,7 +38,9 @@ export async function index(_: Request, res: Response) {
 		});
 	}
 
-	return res.status(200).json(events);
+	setTimeout(() => {
+		return res.status(200).json(events);
+	}, 3000);
 }
 
 /* 

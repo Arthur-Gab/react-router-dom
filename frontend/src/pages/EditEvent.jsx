@@ -71,7 +71,11 @@ export function EditEvent() {
 							navigate('/events');
 						}}
 					>
-						<MoveLeft size={26} />
+						<MoveLeft
+							size={26}
+							aria-hidden='true'
+							focusable='false'
+						/>
 						Voltar
 					</button>
 				</nav>

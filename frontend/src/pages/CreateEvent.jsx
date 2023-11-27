@@ -33,7 +33,11 @@ export function CreateEvent() {
 							navigate(-1);
 						}}
 					>
-						<X size={26} />
+						<X
+							size={26}
+							aria-hidden='true'
+							focusable='false'
+						/>
 						Cancelar
 					</button>
 				</nav>
