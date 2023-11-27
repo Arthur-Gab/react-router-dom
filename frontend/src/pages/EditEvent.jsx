@@ -65,6 +65,7 @@ export function EditEvent() {
 				<nav>
 					<button
 						className='btn relative flex w-44 justify-center gap-2 bg-orange-500 p-4 py-2 text-white'
+						autoFocus={true}
 						onClick={(e) => {
 							e.preventDefault();
 							navigate('/events');

@@ -13,6 +13,6 @@
 
 	a,
 	button {
-		@apply focus-within:outline focus-within:outline-2 focus-within:outline-black;
+		@apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-black;
 	}
 }

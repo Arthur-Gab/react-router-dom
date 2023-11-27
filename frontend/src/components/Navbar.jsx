@@ -1,12 +1,17 @@
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import { Route as Logo, Menu, X, Plus } from 'lucide-react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 export function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
 
+	const createEvent = useRef(null);
 	const closerBtn = useRef(null);
 	const openBtn = useRef(null);
+
+	useEffect(() => {
+		createEvent.current.focus();
+	}, []);
 
 	function handlerOpenMenu() {
 		setIsOpen(true);
@@ -38,19 +43,22 @@ export function Navbar() {
 						<Logo
 							size={32}
 							className='text-orange-500'
+							aria-hidden='true'
+							focusable='false'
 						/>
 					</Link>
 
 					<button
-						aria-label='Abrir Menu'
 						onClick={handlerOpenMenu}
 						ref={openBtn}
 						className='sm:hidden'
+						aria-label={`${isOpen ? 'Fechar Menu' : 'Abrir Menu'}`}
 					>
 						<Menu
 							size={32}
-							aria-hidden='true'
 							className='pointer-events-none text-orange-500'
+							aria-hidden='true'
+							focusable='false'
 						/>
 					</button>
 
@@ -78,6 +86,7 @@ export function Navbar() {
 							<X
 								size={36}
 								aria-hidden='true'
+								focusable='false'
 							/>
 						</button>
 
@@ -111,10 +120,15 @@ export function Navbar() {
 						<div className='max-sm:absolute max-sm:bottom-0 max-sm:w-full max-sm:p-4'>
 							<Link
 								to={'/events/create'}
+								ref={createEvent}
 								className='btn relative flex w-full justify-center gap-2 bg-white p-4 py-2 sm:bg-orange-500 sm:text-white'
 								onClick={handlerCloseMenu}
 							>
-								<Plus size={24} />
+								<Plus
+									size={24}
+									aria-hidden='true'
+									focusable='false'
+								/>
 								Criar Evento
 							</Link>
 						</div>
