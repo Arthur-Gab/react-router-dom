@@ -34,11 +34,7 @@ export function Navbar() {
 					isOpen && 'fixed left-0 top-0 z-20 h-screen'
 				}`}
 			>
-				<nav
-					className={`container flex items-center justify-between p-2 ${
-						isOpen && ''
-					}`}
-				>
+				<nav className={`container flex items-center justify-between p-2`}>
 					<Link
 						to={'/'}
 						aria-label='Ir para página Inicial'
@@ -76,7 +72,7 @@ export function Navbar() {
 					{/* Menu */}
 					<ul
 						className={`flex transition-all max-sm:absolute max-sm:right-0 max-sm:top-0 max-sm:z-30 max-sm:h-full max-sm:flex-col max-sm:bg-orange-500 sm:relative sm:z-0 sm:items-center sm:gap-6 sm:p-2 ${
-							isOpen ? 'max-sm:w-10/12' : 'max-sm:w-0'
+							isOpen ? 'max-sm:w-10/12' : 'max-sm:hidden'
 						}`}
 					>
 						<button
