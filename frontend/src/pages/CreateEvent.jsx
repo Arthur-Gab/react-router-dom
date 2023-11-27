@@ -11,7 +11,10 @@ export function action(queryClient) {
 
 		// Invalidar a query para ter um refetch dos eventos
 		if (response) {
-			await queryClient.refetchQueries(['events']);
+			await queryClient.invalidateQueries({
+				queryKey: ['events'],
+				refetchType: 'all',
+			});
 		}
 
 		return redirect('/events');

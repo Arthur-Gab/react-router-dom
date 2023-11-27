@@ -63,7 +63,10 @@ export function action(queryClient) {
 		const response = await editEvent(id, parseToEventObject(formData));
 
 		if (response) {
-			await queryClient.refetchQueries(['events', id]);
+			await queryClient.invalidateQueries({
+				queryKey: ['events'],
+				refetchType: 'all',
+			});
 		}
 
 		return redirect('/events');
