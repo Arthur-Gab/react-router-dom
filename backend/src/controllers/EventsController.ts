@@ -19,7 +19,9 @@ export async function show(req: Request, res: Response) {
 		});
 	}
 
-	return res.status(200).json(event);
+	setTimeout(() => {
+		return res.status(200).json(event);
+	}, 3000);
 }
 
 /* 
