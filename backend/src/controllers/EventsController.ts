@@ -2,11 +2,12 @@ import { prisma } from '../lib/prisma';
 import { Request, Response } from 'express';
 import {
 	getFieldsWithValue,
-	isAnyFieldMissingValidation,
-	isEveryFieldMissingValidation,
+	isAnyFieldMissing,
+	isAnyFieldMissing,
+	isEveryFieldMissing,
 } from './util/fieldsValidation';
 
-export async function show(req: Request, res: Response) {
+export async function getEventById(req: Request, res: Response) {
 	const { id } = req.params;
 
 	const event = await prisma.event.findUnique({
@@ -31,7 +32,7 @@ export async function show(req: Request, res: Response) {
 	400:
 		- Retornar erro quando não achar nenhum evento registrado no DB
 */
-export async function index(_: Request, res: Response) {
+export async function getAllEvents(_: Request, res: Response) {
 	const events = await prisma.event.findMany();
 
 	if (events.length < 1) {
@@ -52,11 +53,9 @@ export async function index(_: Request, res: Response) {
    400:
         - Retorna erro quando pelo menos um campo não contém valor.
 */
-export async function store(req: Request, res: Response) {
+export async function createEvent(req: Request, res: Response) {
 	// Validar se pelo menos 1 campo não contem valor
-	const isAnyFieldMissing = isAnyFieldMissingValidation(req.body);
-
-	if (isAnyFieldMissing) {
+	if (isAnyFieldMissing(req.body)) {
 		return res.status(400).json({
 			error: 'Um ou mais campos estão faltando.',
 		});
@@ -80,11 +79,9 @@ export async function store(req: Request, res: Response) {
    400:
         - Retorna erro quando nenhum campo é alterado ou ocorre algum problema.
 */
-export async function update(req: Request, res: Response) {
+export async function modifyEventById(req: Request, res: Response) {
 	// Validar se todos os campos não contem valor
-	const isEveryFieldMissing = isEveryFieldMissingValidation(req.body);
-
-	if (isEveryFieldMissing) {
+	if (isEveryFieldMissing(req.body)) {
 		return res.status(400).json({
 			error: 'Nenhum campo para alteração informado',
 		});

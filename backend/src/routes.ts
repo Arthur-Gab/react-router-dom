@@ -4,10 +4,10 @@ import * as eventsController from './controllers/EventsController';
 export const routes = Router();
 
 // Recuperar um evento especifico
-routes.get('/events/:id', eventsController.show);
+routes.get('/events/:id', eventsController.getEventById);
 // Recuperar Todos os Eventos
-routes.get('/events', eventsController.index);
+routes.get('/events', eventsController.getAllEvents);
 // Criar Evento
-routes.post('/events/create', eventsController.store);
-// Alterar Evento
-routes.patch('/events/edit/:id', eventsController.update);
+routes.post('/events/create', eventsController.createEvent);
+// Alterar Evento específico
+routes.patch('/events/edit/:id', eventsController.modifyEventById);
