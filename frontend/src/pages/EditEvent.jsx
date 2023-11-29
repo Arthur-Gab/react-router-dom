@@ -6,7 +6,6 @@ import {
 	useNavigation,
 	defer,
 	Await,
-	json,
 } from 'react-router-dom';
 import { Form } from '../components/Form';
 import { Loading } from '../components/Loading';
@@ -70,10 +69,7 @@ export function EditEvent() {
 		return (
 			<>
 				<Suspense fallback={<SkeletonUI />}>
-					<Await
-						resolve={response}
-						errorElement={<ErrorElement />}
-					>
+					<Await resolve={response}>
 						{({ data: event }) => (
 							<>
 								<header className='container max-w-4xl p-4'>
