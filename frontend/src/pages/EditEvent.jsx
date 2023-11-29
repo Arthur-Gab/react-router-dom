@@ -8,6 +8,7 @@ import {
 	json,
 } from 'react-router-dom';
 import { Form } from '../components/Form';
+import { ErrorElement } from '../components/ErrorElement';
 import { MoveLeft } from 'lucide-react';
 import { getEvent, editEvent, parseToEventObject } from '../util/event';
 
@@ -80,7 +81,10 @@ export function EditEvent() {
 	return (
 		<>
 			<Suspense fallback={<SkeletonUI />}>
-				<Await resolve={response}>
+				<Await
+					resolve={response}
+					errorElement={<ErrorElement />}
+				>
 					{({ data: event }) => (
 						<>
 							<header className='container max-w-4xl p-4'>
