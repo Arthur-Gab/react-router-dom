@@ -1,58 +1,35 @@
 import { Suspense } from 'react';
-import { useLoaderData, Link, defer, Await, json } from 'react-router-dom';
+import { useLoaderData, Link, defer, Await } from 'react-router-dom';
 import { EventItem } from '../components/EventItem';
-import { getEvents } from '../util/event';
+import { getAllEvents } from '../util/event';
 import { Plus } from 'lucide-react';
 import { ErrorElement } from '../components/ErrorElement';
 
 export function loader(queryClient) {
 	return () => {
-		try {
-			const chacedEvents = queryClient.getQueryData(['events']);
+		const chacedEvents = queryClient.getQueryData(['events']);
 
-			if (chacedEvents) {
-				return defer({
-					response: chacedEvents,
-				});
-			}
-
-			const fetchedEvents = queryClient.fetchQuery({
-				queryKey: ['events'],
-				queryFn: getEvents,
-			});
-
+		if (chacedEvents) {
 			return defer({
-				response: fetchedEvents,
-			});
-		} catch (error) {
-			console.error('Error in loader:', error);
-
-			if (error.response) {
-				// The request was made and the server responded with a status code
-				// other than 2xx (e.g., 404, 500).
-				console.error('Server Error:', error.response.data);
-			} else if (error.request) {
-				// The request was made but no response was received.
-				console.error('No response received from the server.');
-			} else {
-				// Something happened in setting up the request that triggered an Error.
-				console.error('Error setting up the request:', error.message);
-			}
-
-			return defer({
-				response: json(
-					{
-						error: 'Não foi possível completar a requisição...',
-					},
-					{ status: 500 },
-				),
+				response: chacedEvents,
 			});
 		}
+
+		const fetchedEvents = queryClient.fetchQuery({
+			queryKey: ['events'],
+			queryFn: getAllEvents,
+		});
+
+		return defer({
+			response: fetchedEvents,
+		});
 	};
 }
 
 export function Events() {
 	const { response } = useLoaderData();
+
+	console.log(response);
 
 	return (
 		<>

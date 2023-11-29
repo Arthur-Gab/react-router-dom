@@ -3,56 +3,41 @@ import {
 	redirect,
 	useLoaderData,
 	useNavigate,
+	useNavigation,
 	defer,
 	Await,
 	json,
 } from 'react-router-dom';
 import { Form } from '../components/Form';
+import { Loading } from '../components/Loading';
 import { ErrorElement } from '../components/ErrorElement';
 import { MoveLeft } from 'lucide-react';
-import { getEvent, editEvent, parseToEventObject } from '../util/event';
+import {
+	getEventById,
+	modifyEventById,
+	parseToEventObject,
+} from '../util/event';
 
 export function loader(queryClient) {
 	return ({ params }) => {
-		try {
-			const { id } = params;
+		const { id } = params;
 
-			const event = queryClient.getQueryData(['events', id]);
+		const event = queryClient.getQueryData(['events', id]);
 
-			if (event) {
-				return defer({
-					response: event,
-				});
-			}
-
-			const fetchedEvent = queryClient.fetchQuery({
-				queryKey: ['events', id],
-				queryFn: () => getEvent(id),
-			});
-
+		if (event) {
 			return defer({
-				response: fetchedEvent,
+				response: event,
 			});
-		} catch (error) {
-			console.error('Error in loader:', error);
-
-			if (error.response) {
-				// The request was made and the server responded with a status code
-				// other than 2xx (e.g., 404, 500).
-				console.error('Server Error:', error.response.data);
-			} else if (error.request) {
-				// The request was made but no response was received.
-				console.error('No response received from the server.');
-			} else {
-				// Something happened in setting up the request that triggered an Error.
-				console.error('Error setting up the request:', error.message);
-			}
-
-			return json(
-				{ error: 'Não foi possível completar a requisição' },
-				{ status: 500 },
-			);
 		}
+
+		const fetchedEvent = queryClient.fetchQuery({
+			queryKey: ['events', id],
+			queryFn: () => getEventById(id),
+		});
+
+		return defer({
+			response: fetchedEvent,
+		});
 	};
 }
 
@@ -61,7 +46,7 @@ export function action(queryClient) {
 		const formData = await request.formData();
 		const { id } = params;
 
-		const response = await editEvent(id, parseToEventObject(formData));
+		const response = await modifyEventById(id, parseToEventObject(formData));
 
 		if (response) {
 			await queryClient.invalidateQueries({
@@ -76,49 +61,54 @@ export function action(queryClient) {
 
 export function EditEvent() {
 	const navigate = useNavigate();
+	const { state } = useNavigation();
 	const { response } = useLoaderData();
 
-	return (
-		<>
-			<Suspense fallback={<SkeletonUI />}>
-				<Await
-					resolve={response}
-					errorElement={<ErrorElement />}
-				>
-					{({ data: event }) => (
-						<>
-							<header className='container max-w-4xl p-4'>
-								<nav>
-									<button
-										className='btn relative flex w-44 justify-center gap-2 bg-orange-500 p-4 py-2 text-white'
-										autoFocus={true}
-										onClick={(e) => {
-											e.preventDefault();
-											navigate('/events');
-										}}
-									>
-										<MoveLeft
-											size={26}
-											aria-hidden='true'
-											focusable='false'
-										/>
-										Voltar
-									</button>
-								</nav>
-							</header>
-							<main className='container mt-8 max-w-4xl p-4'>
-								<h1 className='text-center text-2xl'>Editar Evento</h1>
-								<Form
-									method={'PATCH'}
-									event={event}
-								/>
-							</main>
-						</>
-					)}
-				</Await>
-			</Suspense>
-		</>
-	);
+	if (state === 'submitting') {
+		return <Loading title={'Alterando dados...'} />;
+	} else {
+		return (
+			<>
+				<Suspense fallback={<SkeletonUI />}>
+					<Await
+						resolve={response}
+						errorElement={<ErrorElement />}
+					>
+						{({ data: event }) => (
+							<>
+								<header className='container max-w-4xl p-4'>
+									<nav>
+										<button
+											className='btn relative flex w-44 justify-center gap-2 bg-orange-500 p-4 py-2 text-white'
+											autoFocus={true}
+											onClick={(e) => {
+												e.preventDefault();
+												navigate('/events');
+											}}
+										>
+											<MoveLeft
+												size={26}
+												aria-hidden='true'
+												focusable='false'
+											/>
+											Voltar
+										</button>
+									</nav>
+								</header>
+								<main className='container mt-8 max-w-4xl p-4'>
+									<h1 className='text-center text-2xl'>Editar Evento</h1>
+									<Form
+										method={'PATCH'}
+										event={event}
+									/>
+								</main>
+							</>
+						)}
+					</Await>
+				</Suspense>
+			</>
+		);
+	}
 }
 
 function SkeletonUI() {

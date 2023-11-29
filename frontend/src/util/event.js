@@ -9,16 +9,16 @@ export function parseToEventObject(formData) {
 	};
 }
 
-export async function getEvents() {
+export async function getAllEvents() {
 	return await API.get('/events');
 }
 
-export async function getEvent(id) {
+export async function getEventById(id) {
 	return await API.get(`/events/${id}`);
 }
 
-export async function editEvent(id, data) {
-	return await API.patch(`/events/edit/${id}`, data);
+export async function modifyEventById(id, data) {
+	return await API.patch(`/events/edi/${id}`, data);
 }
 
 export async function createEvent(data) {

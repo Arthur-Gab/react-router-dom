@@ -101,7 +101,9 @@ export async function modifyEventById(req: Request, res: Response) {
 		},
 	});
 
-	return res.status(204).json({
-		message: 'Alteração realizada com sucesso',
-	});
+	setTimeout(() => {
+		return res.status(204).json({
+			message: 'Alteração realizada com sucesso',
+		});
+	}, 3000);
 }

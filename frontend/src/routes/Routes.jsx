@@ -24,6 +24,7 @@ const routes = createBrowserRouter([
 	{
 		path: '/',
 		element: <Navbar />,
+		errorElement: <ErrorElement />,
 		children: [
 			{
 				index: true,
@@ -39,6 +40,7 @@ const routes = createBrowserRouter([
 	{
 		path: '/events/edit/:id',
 		element: <EditEvent />,
+		errorElement: <ErrorElement />,
 		loader: updateEventLoader(queryClient),
 		action: updateEventAction(queryClient),
 	},

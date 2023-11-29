@@ -1,10 +1,6 @@
-import {
-	redirect,
-	useNavigate,
-	useNavigation,
-	useActionData,
-} from 'react-router-dom';
+import { redirect, useNavigate, useNavigation } from 'react-router-dom';
 import { Form } from '../components/Form';
+import { Loading } from '../components/Loading';
 import { X } from 'lucide-react';
 import { createEvent, parseToEventObject } from '../util/event';
 
@@ -37,18 +33,7 @@ export function CreateEvent() {
 	const { state } = useNavigation();
 
 	if (state === 'submitting') {
-		return (
-			<>
-				<section className='flex h-full w-full flex-col items-center justify-center gap-8'>
-					<h1 className='text-xl font-bold'>Criando...</h1>
-					<div className='flex gap-4'>
-						<div className='animate-loading h-4 w-4 rounded-full bg-orange-400'></div>
-						<div className='animation-delay-200 animate-loading h-4 w-4 rounded-full bg-orange-400'></div>
-						<div className='animation-delay-350 animate-loading h-4 w-4 rounded-full bg-orange-400'></div>
-					</div>
-				</section>
-			</>
-		);
+		return <Loading title={'Criando Evento...'} />;
 	} else {
 		return (
 			<>
