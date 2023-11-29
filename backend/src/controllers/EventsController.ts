@@ -66,9 +66,11 @@ export async function createEvent(req: Request, res: Response) {
 		},
 	});
 
-	return res.status(201).json({
-		message: 'Evento criado com sucesso',
-	});
+	setTimeout(() => {
+		return res.status(201).json({
+			message: 'Evento criado com sucesso',
+		});
+	}, 3000);
 }
 
 /* 

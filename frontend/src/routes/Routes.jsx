@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
+import { ErrorElement } from '../components/ErrorElement';
 import { Home } from '../pages/Home';
 import { Events, loader as eventLoader } from '../pages/Events';
 import {
@@ -44,6 +45,7 @@ const routes = createBrowserRouter([
 	{
 		path: '/events/create',
 		element: <CreateEvent />,
+		errorElement: <ErrorElement />,
 		action: createEventAction(queryClient),
 	},
 ]);

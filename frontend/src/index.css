@@ -20,3 +20,11 @@
 		@apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-black;
 	}
 }
+
+.animation-delay-200 {
+	animation-delay: 0.2s;
+}
+
+.animation-delay-350 {
+	animation-delay: 0.35s;
+}
