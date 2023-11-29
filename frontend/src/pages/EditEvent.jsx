@@ -9,7 +9,6 @@ import {
 } from 'react-router-dom';
 import { Form } from '../components/Form';
 import { Loading } from '../components/Loading';
-import { ErrorElement } from '../components/ErrorElement';
 import { MoveLeft } from 'lucide-react';
 import {
 	getEventById,

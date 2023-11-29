@@ -18,7 +18,7 @@ export async function getEventById(id) {
 }
 
 export async function modifyEventById(id, data) {
-	return await API.patch(`/events/edi/${id}`, data);
+	return await API.patch(`/events/edit/${id}`, data);
 }
 
 export async function createEvent(data) {

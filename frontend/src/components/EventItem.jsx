@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export function EventItem({ id, title, description, image, date }) {
+	const [isOpen, setIsOpen] = useState();
+
 	return (
-		<article className='mb-12 h-fit w-full max-w-3xl self-center rounded-md  bg-neutral-100 p-6 shadow shadow-black/20'>
+		<article className='mb-12 h-fit self-center rounded-md bg-neutral-100 p-6  shadow shadow-black/20 max-md:max-w-2xl md:w-full'>
 			<div className='flex max-md:flex-col md:flex md:gap-6'>
 				<figure className='relative max-w-[350px] flex-1 self-center'>
 					<span className='absolute left-2/4 top-2/4 z-10 -translate-x-1/2 -translate-y-1/2 rounded bg-white/75 px-4 py-1 text-2xl max-sm:text-lg'>
@@ -15,15 +18,38 @@ export function EventItem({ id, title, description, image, date }) {
 					/>
 				</figure>
 				<div className='relative z-0 flex flex-1 flex-col'>
-					<h2 className='mb-2 mt-6 text-center text-2xl font-bold'>{title}</h2>
-					<p>{description}</p>
-
-					<Link
-						to={`/events/edit/${id}`}
-						className='btn mt-8 w-full bg-orange-500 p-2 text-center'
+					<h2 className='mb-4 text-center text-2xl font-bold max-md:mt-6'>
+						{title}
+					</h2>
+					<p
+						className={`overflow-hidden  ${
+							isOpen
+								? 'mb-6 h-fit rounded outline outline-black'
+								: 'max-md:h-24 md:h-36'
+						}`}
+						role={isOpen && 'button'}
+						onClick={() => setIsOpen(false)}
 					>
-						Editar
-					</Link>
+						{description}
+					</p>
+					{!isOpen && (
+						<span
+							role='button'
+							onClick={() => setIsOpen(true)}
+							className='mb-4 w-fit py-1 pr-4 text-orange-700'
+						>
+							Veja mais
+						</span>
+					)}
+
+					<div className='w-full md:relative md:bottom-0 md:left-0 md:z-0'>
+						<Link
+							to={`/events/edit/${id}`}
+							className='btn block w-full bg-orange-500 p-2 text-center'
+						>
+							Editar
+						</Link>
+					</div>
 				</div>
 			</div>
 		</article>
