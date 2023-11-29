@@ -16,11 +16,12 @@
 	}
 
 	.btn {
-		@apply relative before:absolute before:-bottom-2 before:-right-2 before:-z-10 before:h-full before:w-full before:border-[3px] before:border-black before:bg-transparent before:content-[''];
+		@apply relative before:absolute before:-bottom-2 before:-right-2 before:-z-10 before:h-full before:w-full before:border-4 before:border-black before:bg-transparent before:content-[''] disabled:opacity-75 before:disabled:opacity-75;
 	}
 
 	a,
-	button {
+	button,
+	[role='button']:focus {
 		@apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-black;
 	}
 }

@@ -28,11 +28,21 @@ export function Form({ method, event }) {
 					event.preventDefault();
 
 					const target = event.currentTarget;
-					handleSubmit(() => {
-						submit(target, {
-							method,
-						});
-					})();
+					const submitter = event.nativeEvent.submitter.innerHTML;
+
+					if (submitter == 'Confirmar') {
+						handleSubmit(() => {
+							submit(target, {
+								method,
+							});
+						})();
+					} else {
+						handleSubmit(() => {
+							submit(target, {
+								method: 'DELETE',
+							});
+						})();
+					}
 				}}
 			>
 				<fieldset className='mt-6 flex flex-col gap-4'>
@@ -91,12 +101,24 @@ export function Form({ method, event }) {
 						<span className='text-orange-500'>{errors.image?.message}</span>
 					</div>
 
-					<button
-						className='btn relative mt-20 flex w-full justify-center gap-2 bg-orange-500 p-4 py-4 text-white'
-						disabled={state === 'submitting'}
-					>
-						Confirmar
-					</button>
+					<div className='flex gap-12'>
+						{method.toUpperCase() == 'PATCH' && (
+							<button
+								className='btn relative mt-20 flex w-full flex-1 justify-center gap-2 bg-black p-4 py-4 text-white focus-visible:outline-[3px] focus-visible:outline-orange-500'
+								disabled={state === 'submitting'}
+								type='submit'
+							>
+								Excluir
+							</button>
+						)}
+						<button
+							className='btn relative mt-20 flex w-full flex-1 justify-center gap-2 bg-orange-500 p-4 py-4 text-white'
+							disabled={state === 'submitting'}
+							type='submit'
+						>
+							Confirmar
+						</button>
+					</div>
 				</fieldset>
 			</form>
 		</>

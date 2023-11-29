@@ -1,8 +1,20 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 export function EventItem({ id, title, description, image, date }) {
-	const [isOpen, setIsOpen] = useState();
+	const [isOpen, setIsOpen] = useState(false);
+	const eventDescription = useRef(null);
+	const seeMoreButton = useRef(null);
+
+	function handlerCloseEventDescriptionOverflow() {
+		setIsOpen(false);
+		seeMoreButton.current.focus({ focusVisible: true });
+	}
+
+	function handlerOpenEventDescriptionOverflow() {
+		setIsOpen(true);
+		eventDescription.current.focus({ focusVisible: true });
+	}
 
 	return (
 		<article className='mb-12 h-fit self-center rounded-md bg-neutral-100 p-6  shadow shadow-black/20 max-md:max-w-2xl md:w-full'>
@@ -21,26 +33,31 @@ export function EventItem({ id, title, description, image, date }) {
 					<h2 className='mb-4 text-center text-2xl font-bold max-md:mt-6'>
 						{title}
 					</h2>
-					<p
-						className={`overflow-hidden  ${
-							isOpen
-								? 'mb-6 h-fit rounded outline outline-black'
-								: 'max-md:h-24 md:h-36'
+					<span
+						className={`overflow-hidden bg-transparent ${
+							isOpen ? 'mb-6 h-fit rounded' : 'max-md:h-24 md:h-36'
 						}`}
-						role={isOpen && 'button'}
-						onClick={() => setIsOpen(false)}
+						role='button'
+						tabIndex={1}
+						ref={eventDescription}
+						onKeyDown={(e) => {
+							if (e.key == 'Enter') {
+								e.preventDefault();
+								handlerCloseEventDescriptionOverflow();
+							}
+						}}
+						onClick={handlerCloseEventDescriptionOverflow}
 					>
 						{description}
-					</p>
-					{!isOpen && (
-						<span
-							role='button'
-							onClick={() => setIsOpen(true)}
-							className='mb-4 w-fit py-1 pr-4 text-orange-700'
-						>
-							Veja mais
-						</span>
-					)}
+					</span>
+
+					<button
+						onClick={handlerOpenEventDescriptionOverflow}
+						ref={seeMoreButton}
+						className={`mb-4 w-fit py-1 text-orange-700 ${isOpen && 'sr-only'}`}
+					>
+						Veja mais
+					</button>
 
 					<div className='w-full md:relative md:bottom-0 md:left-0 md:z-0'>
 						<Link

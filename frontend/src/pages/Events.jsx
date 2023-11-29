@@ -29,8 +29,6 @@ export function loader(queryClient) {
 export function Events() {
 	const { response } = useLoaderData();
 
-	console.log(response);
-
 	return (
 		<>
 			<main className='container flex flex-1 flex-col p-4'>

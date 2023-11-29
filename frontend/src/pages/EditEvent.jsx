@@ -41,20 +41,37 @@ export function loader(queryClient) {
 
 export function action(queryClient) {
 	return async ({ request, params }) => {
+		const { method } = request;
 		const formData = await request.formData();
 		const { id } = params;
 
-		const response = await modifyEventById(id, parseToEventObject(formData));
-
-		if (response) {
-			await queryClient.invalidateQueries({
-				queryKey: ['events'],
-				refetchType: 'all',
-			});
+		if (method == 'PATCH') {
+			await modifyEventByIdFetcher(queryClient, id, formData);
+		} else {
+			await deleteEventByIdFetcher(queryClient, id);
 		}
 
-		return redirect('/events');
+		// return redirect('/events');
+		return null;
 	};
+}
+
+async function deleteEventByIdFetcher(queryClient, id) {
+	console.log('queryCliente', queryClient);
+	console.log('id', id);
+
+	console.log('Deleting some data');
+}
+
+async function modifyEventByIdFetcher(queryClient, id, formData) {
+	const response = await modifyEventById(id, parseToEventObject(formData));
+
+	if (response) {
+		await queryClient.invalidateQueries({
+			queryKey: ['events'],
+			refetchType: 'all',
+		});
+	}
 }
 
 export function EditEvent() {

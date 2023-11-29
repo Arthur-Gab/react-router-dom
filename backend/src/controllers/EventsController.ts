@@ -6,60 +6,71 @@ import {
 	isEveryFieldMissing,
 } from './util/fieldsValidation';
 
+/* 
+	Recuperar Eventos com Base no ID
+	200:
+		- Retorna sucesso quando recuperar o evento pelo ID com sucesso
+	400:
+        - Retorna erro quando não foi possível recuperar o evento pq o ID informado não é válido.
+*/
 export async function getEventById(req: Request, res: Response) {
-	const { id } = req.params;
+	try {
+		const { id } = req.params;
 
-	const event = await prisma.event.findUnique({
-		where: { id },
-	});
+		const event = await prisma.event.findUniqueOrThrow({
+			where: { id },
+		});
 
-	if (!event) {
+		setTimeout(() => {
+			return res.status(200).json(event);
+		}, 800);
+	} catch (error) {
 		return res.status(404).json({
-			error: 'Esse evento não existe mais...',
+			error:
+				'A recuperação deste evento falhou, pois não foi encontrado nenhum registro correspondente ao ID fornecido.',
 		});
 	}
-
-	setTimeout(() => {
-		return res.status(200).json(event);
-	}, 3000);
 }
 
 /* 
 	Recuperar Eventos do BD
 	200:
-		- Retorna sucesso quando recuperar todos os eventos do DB
-	400:
-		- Retornar erro quando não achar nenhum evento registrado no DB
+		- Retorna sucesso quando recuperar todos os eventos com sucesso
+	404:
+		- Retornar erro não achar nenhum evento registrado no BD
 */
 export async function getAllEvents(_: Request, res: Response) {
 	const events = await prisma.event.findMany();
 
 	if (events.length < 1) {
 		return res.status(404).json({
-			error: 'Nenhum evento criado ainda...',
+			error:
+				'Nenhum evento encontrado. Parece que ainda não foi criado nenhum evento. Por favor, considere criar um novo evento antes de tentar recuperar informações.',
 		});
 	}
 
 	setTimeout(() => {
 		return res.status(200).json(events);
-	}, 3000);
+	}, 800);
 }
 
 /* 
    Criação de Evento
    200:
-        - Retorna sucesso quando todos os campos contêm valor.
+        - Retorna sucesso quando foi possível a criação do Evento.
    400:
-        - Retorna erro quando pelo menos um campo não contém valor.
+        - Retorna erro quando os valores informados não forem válidos.
 */
 export async function createEvent(req: Request, res: Response) {
 	// Validar se pelo menos 1 campo não contem valor
 	if (isAnyFieldMissing(req.body)) {
 		return res.status(400).json({
-			error: 'Um ou mais campos estão faltando.',
+			error:
+				'Por favor, preencha todos os campos obrigatórios antes de prosseguir.',
 		});
 	}
 
+	console.log('Trying to Create');
 	await prisma.event.create({
 		data: {
 			...req.body,
@@ -67,43 +78,79 @@ export async function createEvent(req: Request, res: Response) {
 	});
 
 	setTimeout(() => {
-		return res.status(201).json({
-			message: 'Evento criado com sucesso',
-		});
-	}, 3000);
+		return res.status(201).json();
+	}, 800);
 }
 
 /* 
-   Alterar campos informados pelo cliente
-   200:
-        - Retorna sucesso quando pelo menos um campo é alterado com sucesso.
-   400:
-        - Retorna erro quando nenhum campo é alterado ou ocorre algum problema.
+   Modificar Evento com base no ID
+   204:
+        - Retorna sucesso o registro do evento é alterado com sucesso pelas informações passadas
+   404:
+        - Retorna erro quando não foi possível deletar o recurso pq o ID informado não é válido.
 */
 export async function modifyEventById(req: Request, res: Response) {
-	// Validar se todos os campos não contem valor
-	if (isEveryFieldMissing(req.body)) {
-		return res.status(400).json({
-			error: 'Nenhum campo para alteração informado',
+	try {
+		// Validar se todos os campos não contem valor
+		if (isEveryFieldMissing(req.body)) {
+			return res.status(400).json({
+				error:
+					'Nenhum campo foi fornecido para realizar a alteração. Por favor, inclua os campos que deseja modificar e tente novamente.',
+			});
+		}
+
+		const { id } = req.params;
+		const fieldsWithValue = getFieldsWithValue(req.body);
+
+		//Procurar o evento pelo id e substituir os dados
+		await prisma.event.update({
+			where: {
+				id,
+			},
+			data: {
+				...fieldsWithValue,
+			},
+		});
+
+		setTimeout(() => {
+			return res.status(204).json({
+				message: 'Alteração realizada com sucesso!',
+			});
+		}, 800);
+	} catch (error) {
+		return res.status(404).json({
+			error:
+				'Não foi possível editar o evento. O ID fornecido não corresponde a nenhum registro existente. Certifique-se de utilizar um ID válido e tente novamente.',
 		});
 	}
+}
 
-	const { id } = req.params;
-	const fieldsWithValue = getFieldsWithValue(req.body);
+/* 
+   Deletar evento com base no ID
+   204:
+        - Retorna sucesso quando pelo o registro do evento é removido do BD com sucesso.
+   404:
+        - Retorna erro quando não foi possível deletar o recurso pq o ID informado não é válido.
+*/
+export async function deleteEventById(req: Request, res: Response) {
+	try {
+		const { id } = req.params;
 
-	//Procurar o evento pelo id e substituir os dados
-	await prisma.event.update({
-		where: {
-			id,
-		},
-		data: {
-			...fieldsWithValue,
-		},
-	});
-
-	setTimeout(() => {
-		return res.status(204).json({
-			message: 'Alteração realizada com sucesso',
+		await prisma.event.delete({
+			where: {
+				id,
+			},
 		});
-	}, 3000);
+
+		setTimeout(() => {
+			return res.status(204).json({
+				message: 'Registro deletado com sucesso!',
+			});
+		}, 800);
+	} catch (error) {
+		return res.status(404).json({
+			error:
+				'O ID não foi fornecido como parâmetro. Por favor, inclua um ID válido para realizar a operação desejada.',
+		});
+	}
 }
