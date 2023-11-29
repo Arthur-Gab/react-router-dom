@@ -3,7 +3,6 @@ import { Request, Response } from 'express';
 import {
 	getFieldsWithValue,
 	isAnyFieldMissing,
-	isAnyFieldMissing,
 	isEveryFieldMissing,
 } from './util/fieldsValidation';
 
@@ -100,7 +99,7 @@ export async function modifyEventById(req: Request, res: Response) {
 		},
 	});
 
-	return res.status(200).json({
+	return res.status(204).json({
 		message: 'Alteração realizada com sucesso',
 	});
 }

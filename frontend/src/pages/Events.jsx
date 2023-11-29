@@ -3,6 +3,7 @@ import { useLoaderData, Link, defer, Await, json } from 'react-router-dom';
 import { EventItem } from '../components/EventItem';
 import { getEvents } from '../util/event';
 import { Plus } from 'lucide-react';
+import { ErrorElement } from '../components/ErrorElement';
 
 export function loader(queryClient) {
 	return () => {
@@ -57,7 +58,10 @@ export function Events() {
 		<>
 			<main className='container flex flex-1 flex-col p-4'>
 				<Suspense fallback={<SkeletonUI />}>
-					<Await resolve={response}>
+					<Await
+						resolve={response}
+						errorElement={<ErrorElement />}
+					>
 						{({ status, data: events }) =>
 							status === 200 ? (
 								events.map((event) => (
