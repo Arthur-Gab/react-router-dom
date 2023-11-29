@@ -44,7 +44,11 @@ export function CreateEvent() {
 							autoFocus={true}
 							onClick={(e) => {
 								e.preventDefault();
-								navigate(-1);
+								if (history.length < 3) {
+									navigate('/');
+								} else {
+									navigate(-1);
+								}
 							}}
 						>
 							<X
