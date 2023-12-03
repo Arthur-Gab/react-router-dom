@@ -1,8 +1,7 @@
 import { Suspense } from 'react';
-import { useLoaderData, Link, defer, Await } from 'react-router-dom';
+import { useLoaderData, defer, Await } from 'react-router-dom';
 import { EventItem } from '../components/EventItem';
 import { getAllEvents } from '../util/event';
-import { Plus } from 'lucide-react';
 import { ErrorElement } from '../components/ErrorElement';
 
 export function loader(queryClient) {
@@ -11,7 +10,7 @@ export function loader(queryClient) {
 
 		if (chacedEvents) {
 			return defer({
-				data: chacedEvents,
+				response: chacedEvents,
 			});
 		}
 
@@ -21,23 +20,23 @@ export function loader(queryClient) {
 		});
 
 		return defer({
-			data: fetchedEvents,
+			response: fetchedEvents,
 		});
 	};
 }
 
 export function Events() {
-	const { data: events } = useLoaderData();
+	const { response } = useLoaderData();
 
 	return (
 		<>
 			<main className='container flex flex-1 flex-col p-4'>
 				<Suspense fallback={<SkeletonUI />}>
 					<Await
-						resolve={events}
+						resolve={response}
 						errorElement={<ErrorElement />}
 					>
-						{(events) => {
+						{({ data: events }) => {
 							return events.map((event) => (
 								<EventItem
 									key={event.id}

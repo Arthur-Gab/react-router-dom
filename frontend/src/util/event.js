@@ -11,8 +11,7 @@ export function parseToEventObject(formData) {
 
 export async function getAllEvents() {
 	try {
-		const response = await API.get('/events');
-		return response.data;
+		return await API.get('/events');
 	} catch (error) {
 		if (error.response) {
 			// The request was made and the server responded with a status code
@@ -29,17 +28,73 @@ export async function getAllEvents() {
 }
 
 export async function getEventById(id) {
-	await API.get(`/events/${id}`);
+	try {
+		return API.get(`/events/${id}`);
+	} catch (error) {
+		if (error.response) {
+			// The request was made and the server responded with a status code
+			// that falls out of the range of 2xx
+			throw error.response.data;
+		} else if (error.request) {
+			// The request was made but no response was received
+			console.log(error.request);
+		} else {
+			// Something happened in setting up the request that triggered an Error
+			console.log('Error', error.message);
+		}
+	}
 }
 
 export async function modifyEventById(id, eventFormData) {
-	return await API.patch(`/events/edit/${id}`, eventFormData);
+	try {
+		return await API.patch(`/events/edit/${id}`, eventFormData);
+	} catch (error) {
+		if (error.response) {
+			// The request was made and the server responded with a status code
+			// that falls out of the range of 2xx
+			throw error.response.data;
+		} else if (error.request) {
+			// The request was made but no response was received
+			console.log(error.request);
+		} else {
+			// Something happened in setting up the request that triggered an Error
+			console.log('Error', error.message);
+		}
+	}
 }
 
 export async function createEvent(eventFormData) {
-	return await API.post('/events/create', eventFormData);
+	try {
+		return await API.post('/events/create', eventFormData);
+	} catch (error) {
+		if (error.response) {
+			// The request was made and the server responded with a status code
+			// that falls out of the range of 2xx
+			throw error.response.data;
+		} else if (error.request) {
+			// The request was made but no response was received
+			console.log(error.request);
+		} else {
+			// Something happened in setting up the request that triggered an Error
+			console.log('Error', error.message);
+		}
+	}
 }
 
 export async function deleteEventById(id) {
-	return await API.delete(`/events/edit/${id}`);
+	try {
+		return await API.delete(`/events/edit/${id}`);
+	} catch (error) {
+		if (error.response) {
+			// The request was made and the server responded with a status code
+			// that falls out of the range of 2xx
+			throw error.response.data;
+		} else if (error.request) {
+			// The request was made but no response was received
+			console.log(error.request);
+		} else {
+			// Something happened in setting up the request that triggered an Error
+			console.log('Error', error.message);
+		}
+	}
 }
