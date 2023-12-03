@@ -12,13 +12,7 @@ import {
 } from '../pages/EditEvent';
 import { CreateEvent, action as createEventAction } from '../pages/CreateEvent';
 
-const queryClient = new QueryClient({
-	defaultOptions: {
-		queries: {
-			staleTime: 1000 * 60 * 2, // 2min
-		},
-	},
-});
+const queryClient = new QueryClient();
 
 const routes = createBrowserRouter([
 	{

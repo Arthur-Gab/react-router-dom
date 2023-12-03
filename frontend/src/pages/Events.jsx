@@ -11,7 +11,7 @@ export function loader(queryClient) {
 
 		if (chacedEvents) {
 			return defer({
-				response: chacedEvents,
+				data: chacedEvents,
 			});
 		}
 
@@ -21,57 +21,34 @@ export function loader(queryClient) {
 		});
 
 		return defer({
-			response: fetchedEvents,
+			data: fetchedEvents,
 		});
 	};
 }
 
 export function Events() {
-	const { response } = useLoaderData();
+	const { data: events } = useLoaderData();
 
 	return (
 		<>
 			<main className='container flex flex-1 flex-col p-4'>
 				<Suspense fallback={<SkeletonUI />}>
 					<Await
-						resolve={response}
+						resolve={events}
 						errorElement={<ErrorElement />}
 					>
-						{({ status, data: events }) =>
-							status === 200 ? (
-								events.map((event) => (
-									<EventItem
-										key={event.id}
-										id={event.id}
-										title={event.title}
-										description={event.description}
-										image={event.image}
-										date={event.date}
-									/>
-								))
-							) : (
-								<section className='flex flex-1 flex-col items-center justify-center'>
-									<h1 className='mb-8 text-4xl font-bold'>👀 Oops!</h1>
-									<p>
-										{events
-											? events.error
-											: 'Something went wrong! Take a look on console'}
-										🤔
-									</p>
-									<p className='mb-6'>
-										Esperimente criar um evento logo a baixo
-									</p>
-
-									<Link
-										to={'/events/create'}
-										className='btn relative flex w-full max-w-md justify-center gap-2 bg-orange-500 p-4 max-sm:p-2 sm:p-4'
-									>
-										<Plus size={24} />
-										Criar Evento
-									</Link>
-								</section>
-							)
-						}
+						{(events) => {
+							return events.map((event) => (
+								<EventItem
+									key={event.id}
+									id={event.id}
+									title={event.title}
+									description={event.description}
+									image={event.image}
+									date={event.date}
+								/>
+							));
+						}}
 					</Await>
 				</Suspense>
 			</main>

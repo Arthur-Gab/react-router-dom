@@ -45,7 +45,7 @@ export async function getAllEvents(_: Request, res: Response) {
 	if (events.length < 1) {
 		return res.status(404).json({
 			error:
-				'Nenhum evento encontrado. Parece que ainda não foi criado nenhum evento. Por favor, considere criar um novo evento antes de tentar recuperar informações.',
+				'Parece que ainda não foi criado nenhum evento. Por favor, considere criar um novo evento.',
 		});
 	}
 

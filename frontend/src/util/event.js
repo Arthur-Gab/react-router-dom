@@ -10,17 +10,36 @@ export function parseToEventObject(formData) {
 }
 
 export async function getAllEvents() {
-	return await API.get('/events');
+	try {
+		const response = await API.get('/events');
+		return response.data;
+	} catch (error) {
+		if (error.response) {
+			// The request was made and the server responded with a status code
+			// that falls out of the range of 2xx
+			throw error.response.data;
+		} else if (error.request) {
+			// The request was made but no response was received
+			console.log(error.request);
+		} else {
+			// Something happened in setting up the request that triggered an Error
+			console.log('Error', error.message);
+		}
+	}
 }
 
 export async function getEventById(id) {
-	return await API.get(`/events/${id}`);
+	await API.get(`/events/${id}`);
 }
 
-export async function modifyEventById(id, data) {
-	return await API.patch(`/events/edit/${id}`, data);
+export async function modifyEventById(id, eventFormData) {
+	return await API.patch(`/events/edit/${id}`, eventFormData);
 }
 
-export async function createEvent(data) {
-	return await API.post('/events/create', data);
+export async function createEvent(eventFormData) {
+	return await API.post('/events/create', eventFormData);
+}
+
+export async function deleteEventById(id) {
+	return await API.delete(`/events/edit/${id}`);
 }

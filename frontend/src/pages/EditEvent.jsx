@@ -11,6 +11,7 @@ import { Form } from '../components/Form';
 import { Loading } from '../components/Loading';
 import { MoveLeft } from 'lucide-react';
 import {
+	deleteEventById,
 	getEventById,
 	modifyEventById,
 	parseToEventObject,
@@ -46,25 +47,25 @@ export function action(queryClient) {
 		const { id } = params;
 
 		if (method == 'PATCH') {
-			await modifyEventByIdFetcher(queryClient, id, formData);
+			return await modifyEventByIdFetcher(queryClient, id, formData);
 		} else {
-			await deleteEventByIdFetcher(queryClient, id);
+			return await deleteEventByIdFetcher(queryClient, id);
 		}
 
 		// return redirect('/events');
-		return null;
 	};
 }
 
 async function deleteEventByIdFetcher(queryClient, id) {
-	console.log('queryCliente', queryClient);
-	console.log('id', id);
+	await deleteEventById(`${id}a`);
 
-	console.log('Deleting some data');
+	// Remover a queryKey: ['events', ID]
+
+	// Invalidar a queryKey: ['events']
 }
 
 async function modifyEventByIdFetcher(queryClient, id, formData) {
-	const response = await modifyEventById(id, parseToEventObject(formData));
+	const response = modifyEventById(id, parseToEventObject(formData));
 
 	if (response) {
 		await queryClient.invalidateQueries({
