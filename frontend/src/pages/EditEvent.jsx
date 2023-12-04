@@ -21,15 +21,7 @@ export function loader(queryClient) {
 	return ({ params }) => {
 		const { id } = params;
 
-		const event = queryClient.getQueryData(['events', id]);
-
-		if (event) {
-			return defer({
-				response: event,
-			});
-		}
-
-		const fetchedEvent = queryClient.fetchQuery({
+		const fetchedEvent = queryClient.ensureQueryData({
 			queryKey: ['events', id],
 			queryFn: () => getEventById(id),
 		});

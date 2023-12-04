@@ -21,6 +21,8 @@ export async function getEventById(req: Request, res: Response) {
 			where: { id },
 		});
 
+		console.log('on getEvent');
+
 		setTimeout(() => {
 			return res.status(200).json(event);
 		}, 800);
@@ -70,7 +72,6 @@ export async function createEvent(req: Request, res: Response) {
 		});
 	}
 
-	console.log('Trying to Create');
 	await prisma.event.create({
 		data: {
 			...req.body,

@@ -10,14 +10,40 @@ export function ErrorElement() {
 	const error = useRouteError();
 	const response_error = useAsyncError();
 
-	// Rotas que não existem
 	if (isRouteErrorResponse(error)) {
+		// Rotas que não existem
 		return (
 			<>
 				<section className='flex flex-1 flex-col items-center justify-center gap-6 p-4'>
 					<h1 className='text-4xl font-bold'>{error.status}</h1>
 					<p className='text-center sm:text-lg'>
-						Parece que você está acessando uma página que não existe... 😥
+						{error.response?.data ||
+							'Parece que você está acessando uma página que não existe... 😥'}
+					</p>
+					<Link
+						to={'/'}
+						className='btn relative flex w-60 justify-center gap-2 bg-orange-500 p-4 py-2 text-white'
+					>
+						<MoveLeft
+							size={26}
+							aria-hidden='true'
+							focusable='false'
+						/>
+						Voltar
+					</Link>
+				</section>
+			</>
+		);
+	} else if (error) {
+		// Error de loading
+		const { response } = error;
+		return (
+			<>
+				<section className='flex flex-1 flex-col items-center justify-center gap-6 p-4'>
+					<h1 className='text-4xl font-bold'>{response.status}</h1>
+					<p className='text-center sm:text-lg'>
+						{response?.data.error ||
+							'Parece que você está acessando uma página que não existe... 😥'}
 					</p>
 					<Link
 						to={'/'}
@@ -35,6 +61,7 @@ export function ErrorElement() {
 		);
 	}
 
+	// Error de request or response
 	return (
 		<>
 			<section className='flex flex-1 flex-col items-center justify-center gap-6 p-4'>
